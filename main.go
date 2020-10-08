@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -33,7 +35,24 @@ func (this SinkFile) DownloadedLength() int {
 }
 
 func (this SinkFile) Download() {
-	this.downloaded = "Downloaded text"
+	resp, err := http.Get(this.url)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+	this.downloaded = string(bodyBytes)
+
+	fo, err := os.Create(this.filename)
+	if err != nil {
+		return
+	}
+	fo.Write(bodyBytes)
+	fmt.Printf("Downloaded [%s] to (%s)\n", this.url, this.filename)
 }
 
 func (this SinkFile) Update() {
@@ -69,7 +88,7 @@ func main() {
 	}
 
 	for _, sink := range sinks {
-		sink.Print()
+		sink.Download()
 	}
 
 	if err := scanner.Err(); err != nil {

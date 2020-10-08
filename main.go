@@ -18,11 +18,11 @@ type SinkFile struct {
 	downloaded string
 }
 
-func (this SinkFile) Print() {
+func (this *SinkFile) Print() {
 	fmt.Printf("[%d] %s (%d): %s (%d)\n", this.id, this.filename, this.LocalFileLength(), this.url, this.DownloadedLength())
 }
 
-func (this SinkFile) LocalFileLength() int64 {
+func (this *SinkFile) LocalFileLength() int64 {
 	file, err := os.Stat(this.filename)
 	if err != nil {
 		return 0
@@ -30,11 +30,11 @@ func (this SinkFile) LocalFileLength() int64 {
 	return file.Size()
 }
 
-func (this SinkFile) DownloadedLength() int {
+func (this *SinkFile) DownloadedLength() int {
 	return len(this.downloaded)
 }
 
-func (this SinkFile) Download() {
+func (this *SinkFile) Download() {
 	resp, err := http.Get(this.url)
 	if err != nil {
 		return
@@ -55,7 +55,7 @@ func (this SinkFile) Download() {
 	fmt.Printf("Downloaded [%s] to (%s)\n", this.url, this.filename)
 }
 
-func (this SinkFile) Update() {
+func (this *SinkFile) Update() {
 	//
 }
 
@@ -89,6 +89,7 @@ func main() {
 
 	for _, sink := range sinks {
 		sink.Download()
+		sink.Print()
 	}
 
 	if err := scanner.Err(); err != nil {

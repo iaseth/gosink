@@ -1,0 +1,11 @@
+
+SITE_NAME = gosink
+SITE_URL = https://iaseth.github.io/gosink/
+SITE_REPO = https://github.com/iaseth/gosink
+
+themes = [gosink]
+
+[code]
+analytics = data/analytics.html
+
+

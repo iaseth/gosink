@@ -1,0 +1,23 @@
+{
+	"meta": {
+		"title": "Gosink theme",
+		"version": "0.1.0",
+		"documentation": "https://www.example.com"
+	},
+
+	"layouts": [
+		{
+			"name": "gosink",
+			"path": "gosink.pug"
+		}
+	],
+
+	"css": [
+		{
+			"description": "",
+			"name": "gosink",
+			"path": "gosink.css",
+			"title": "Default"
+		}
+	]
+}

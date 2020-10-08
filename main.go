@@ -17,7 +17,7 @@ type SinkFile struct {
 }
 
 func (this SinkFile) Print() {
-	fmt.Printf("[%d] %s (%d): %s\n", this.id, this.filename, this.LocalFileLength(), this.url)
+	fmt.Printf("[%d] %s (%d): %s (%d)\n", this.id, this.filename, this.LocalFileLength(), this.url, this.DownloadedLength())
 }
 
 func (this SinkFile) LocalFileLength() int64 {
@@ -26,6 +26,10 @@ func (this SinkFile) LocalFileLength() int64 {
 		return 0
 	}
 	return file.Size()
+}
+
+func (this SinkFile) DownloadedLength() int {
+	return len(this.downloaded)
 }
 
 func (this SinkFile) Download() {
